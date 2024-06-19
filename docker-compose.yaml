@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: pihole
+    environment:
+      TZ: 'America/New_York' # Set your timezone
+      WEBPASSWORD: 'password' # Set a password for the Pi-hole web interface
+      DNS1: 8.8.8.8
+      DNS2: 8.8.4.4
+      VIRTUAL_HOST: pihole.local
+      ServerIP: 192.168.0.19
+    volumes:
+      - './configs/:/etc/dnsmasq.d/'
+      - './pihole/:/etc/pihole/'
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '80:80/tcp'
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - pihole_network
+
+networks:
+  pihole_network:
+    driver: bridge
