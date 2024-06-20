@@ -16,9 +16,9 @@ services:
       - './configs/:/etc/dnsmasq.d/'
       - './pihole/:/etc/pihole/'
     ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-      - '80:80/tcp'
+      - '5353:53/tcp'
+      - '5353:53/udp'
+      - '8080:80/tcp'
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
